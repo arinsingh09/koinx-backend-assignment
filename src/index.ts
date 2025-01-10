@@ -4,7 +4,7 @@ import statsRoute from "./routes/stats";
 import deviationRoute from "./routes/deviation";
 
 const app = express();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 80;
 app.use(express.json());
 
 app.use("/stats", statsRoute);
