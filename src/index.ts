@@ -10,6 +10,10 @@ app.use(express.json());
 app.use("/stats", statsRoute);
 app.use("/deviation", deviationRoute);
 
+app.get("/", (req, res) => {
+  res.json({"stats endpoint": "/stats", "deviation endpoint": "/deviation"});
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT}`);
 });
