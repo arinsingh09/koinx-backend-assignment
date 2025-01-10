@@ -21,24 +21,24 @@ async function fetchCryptoData() {
     const data = response.data;
 
     const db = await connectToDatabase();
-    const collection = db.collection("crypto_data");
 
-    const records: CryptoData[] = Object.keys(response.data).map((coin) => {
+    // insert data into the respective collection
+    for (const coin of COINS) {
+      const collection = db.collection(coin);  // creating a collection for each coin
+
       const record: CryptoData = {
-        coin,
-        price: response.data[coin].usd,
-        marketCap: response.data[coin].usd_market_cap,
-        "24hChange": response.data[coin].usd_24h_change,
+        price: data[coin].usd,
+        marketCap: data[coin].usd_market_cap,
+        "24hChange": data[coin].usd_24h_change,
         timestamp: new Date(),
       };
 
       validateSchema(record, cryptoDataSchema);
 
-      return record;
-    });
+      await collection.insertOne(record);
+    }
 
-    await collection.insertMany(records);
-    console.log("Crypto data saved to the database");
+    console.log("Crypto data saved to the respective collections");
   } catch (error) {
     console.error("Error fetching crypto data:", error instanceof Error ? error.message : error);
   }

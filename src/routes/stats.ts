@@ -13,10 +13,10 @@ router.get("/", async (req: Request, res: Response): Promise<any> => {
 
   try {
     const db = await connectToDatabase();
-    const collection = db.collection("crypto_data");
+    const collection = db.collection(coin);
 
     const latestData = (await collection.findOne(
-      { coin },
+      {},
       { sort: { timestamp: -1 } }
     )) as CryptoDataWithId | null;
 

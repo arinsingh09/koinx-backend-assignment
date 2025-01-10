@@ -1,7 +1,6 @@
 import { ObjectId } from "mongodb";
 
 export interface CryptoData {
-  coin: string;
   price: number;
   marketCap: number;
   "24hChange": number;
@@ -13,7 +12,6 @@ export interface CryptoDataWithId extends CryptoData {
 }
 
 export const cryptoDataSchema: Record<keyof CryptoData, string> = {
-  coin: "string",
   price: "number",
   marketCap: "number",
   "24hChange": "number",
